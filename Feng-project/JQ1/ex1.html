@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        .box{
+            width: 800px;
+            height: 450px;
+           margin: 100px auto;
+           
+            position: relative;
+            cursor: crosshair;
+        }
+        .box img{
+            width: 100%;
+        }
+        div.mag{
+            width:150px;
+            height:150px;
+            border: 2px solid #fff;
+            background:url('./img/a3.jpg');
+            border-radius: 50%;
+            position: absolute;
+            right:0;
+            bottom:0;
+            box-sizing: border-box;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <img src="./img/a3.jpg" alt="">
+        <div class="mag"></div>
+    </div>
+</body>
+<script>
+    $('.box').find(".mag").css({
+        backgroundSize:$(".box").width()*2+"px "+$(".box").height()*2+"px"
+    })
+    $('.box').on('mousemove',function(event){
+       var x=event.pageX-$(this).offset().left
+       var y=event.pageY-$(this).offset().top
+    //    console.log({x,y})
+      
+       $(this).find(".mag").show()
+
+       if(x>$('.box').width()||x<0||y>$('.box').height()||y<0){
+            $(this).find('.mag').hide()
+            return
+        }
+
+       var magSize={
+           w:$(this).find(".mag").outerWidth(),
+           h:$(this).find(".mag").outerHeight()
+       }
+
+    //    console.log(magSize.w,magSize.h)
+       $(this).find(".mag").css({
+           left:x-magSize.w/2+'px',
+           top:y-magSize.h/2+'px',
+           backgroundPositionX:-(x*2-magSize.w/2)+'px',
+           backgroundPositionY:-(y*2-magSize.h/2)+'px'
+       })
+    })
+</script>
+</html>
